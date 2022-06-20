@@ -1,6 +1,10 @@
 import User from '../models/Users';
 import usersRouter from '../routes/user.routes';
 
+interface GetUserDTO {
+    index: number;
+}
+
 interface CreateUserDTO {
     name: string;
     birth_date: Date;
@@ -28,6 +32,10 @@ class UserRepository {
 
     public all(): User[] {
         return this.users;
+    }
+
+    public get({ index }: GetUserDTO): User {
+        return this.users[index];
     }
 
     public create(data: CreateUserDTO): User {

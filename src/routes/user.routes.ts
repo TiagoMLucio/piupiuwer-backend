@@ -1,10 +1,10 @@
 import { parseISO } from 'date-fns';
 import { Router } from 'express';
 
-import User from '../models/Users';
 import UserRepository from '../repositories/UsersRepository';
 import CreateUserService from '../services/CreateUserService';
 import DeleteUserService from '../services/DeleteUserService';
+import GetUserService from '../services/GetUserService';
 import UpdateUserService from '../services/UpdateUserService';
 
 const usersRouter = Router();
@@ -14,6 +14,20 @@ usersRouter.get('/', (request, response) => {
     const users = usersRepository.all();
 
     return response.json(users);
+});
+
+usersRouter.get('/:id', (request, response) => {
+    try {
+        const { id } = request.params;
+
+        const getUser = new GetUserService(usersRepository);
+
+        const user = getUser.execute({ id });
+
+        return response.json(user);
+    } catch (e: any) {
+        return response.status(400).json({ error: e.message });
+    }
 });
 
 usersRouter.post('/', (request, response) => {
