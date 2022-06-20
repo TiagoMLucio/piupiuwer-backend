@@ -2,10 +2,10 @@ import { parseISO } from 'date-fns';
 import { Router } from 'express';
 
 import UserRepository from '../repositories/UsersRepository';
-import CreateUserService from '../services/CreateUserService';
-import DeleteUserService from '../services/DeleteUserService';
-import GetUserService from '../services/GetUserService';
-import UpdateUserService from '../services/UpdateUserService';
+import CreateUserService from '../services/UserServices/CreateUserService';
+import DeleteUserService from '../services/UserServices/DeleteUserService';
+import GetUserService from '../services/UserServices/GetUserService';
+import UpdateUserService from '../services/UserServices/UpdateUserService';
 
 const usersRouter = Router();
 const usersRepository = new UserRepository();
@@ -74,7 +74,7 @@ usersRouter.delete('/:id', (request, response) => {
 
         const deleteUser = new DeleteUserService(usersRepository);
 
-        const user = deleteUser.execute({ id });
+        deleteUser.execute({ id });
 
         return response.status(204).send();
     } catch (e: any) {

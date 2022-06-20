@@ -1,5 +1,5 @@
-import User from '../models/Users';
-import UserRepository from '../repositories/UsersRepository';
+import User from '../../models/Users';
+import UserRepository from '../../repositories/UsersRepository';
 
 interface Request {
     id: string;
@@ -14,19 +14,19 @@ interface Request {
 }
 
 class UpdateUserService {
-    private userRepository: UserRepository;
+    private usersRepository: UserRepository;
 
-    constructor(userRepository: UserRepository) {
-        this.userRepository = userRepository;
+    constructor(usersRepository: UserRepository) {
+        this.usersRepository = usersRepository;
     }
 
     public execute({ id, data }: Request): User {
-        const userIndex = this.userRepository.findIndexById(id);
+        const userIndex = this.usersRepository.findIndexById(id);
         if (userIndex < 0)
             throw Error('Nenhum usuário com esse id foi encontrado.');
-        if (this.userRepository.findIndexByCpf(data.cpf) >= 0)
+        if (this.usersRepository.findIndexByCpf(data.cpf) >= 0)
             throw Error('Um usuário com esse CPF já foi cadastrado.');
-        const user = this.userRepository.update({
+        const user = this.usersRepository.update({
             index: userIndex,
             data,
         });

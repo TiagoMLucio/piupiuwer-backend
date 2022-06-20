@@ -10,8 +10,6 @@ interface CreateUserDTO {
     birth_date: Date;
     cpf: string;
     phone: string;
-    created_at: Date;
-    updated_at: Date;
 }
 
 interface UpdateUserDTO {
@@ -47,7 +45,11 @@ class UserRepository {
     }
 
     public update({ index, data }: UpdateUserDTO): User {
-        return (this.users[index] = { ...this.users[index], ...data });
+        return (this.users[index] = {
+            ...this.users[index],
+            ...data,
+            updated_at: new Date(),
+        });
     }
 
     public delete({ index }: DeleteUserDTO) {
