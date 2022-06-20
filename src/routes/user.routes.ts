@@ -8,7 +8,7 @@ import GetUserService from '../services/UserServices/GetUserService';
 import UpdateUserService from '../services/UserServices/UpdateUserService';
 
 const usersRouter = Router();
-const usersRepository = new UserRepository();
+export const usersRepository = new UserRepository();
 
 usersRouter.get('/', (request, response) => {
     const users = usersRepository.all();

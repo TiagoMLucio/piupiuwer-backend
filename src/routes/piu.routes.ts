@@ -6,10 +6,10 @@ import CreatePiuService from '../services/PiuServices/CreatePiuService';
 import DeletePiuService from '../services/PiuServices/DeletePiuService';
 import GetPiuService from '../services/PiuServices/GetPiuService';
 import UpdatePiuService from '../services/PiuServices/UpdatePiuService';
+import { usersRepository } from './user.routes';
 
 const piusRouter = Router();
-const piusRepository = new PiuRepository();
-const usersRepository = new UserRepository();
+export const piusRepository = new PiuRepository();
 
 piusRouter.get('/', (request, response) => {
     const users = piusRepository.all();
@@ -40,10 +40,7 @@ piusRouter.post('/', (request, response) => {
             usersRepository,
         });
 
-        const user = createUser.execute({
-            ...data,
-            birth_date: parseISO(data.birth_date),
-        });
+        const user = createUser.execute(data);
 
         return response.json(user);
     } catch (e: any) {
@@ -60,10 +57,7 @@ piusRouter.put('/:id', (request, response) => {
 
         const user = updateUser.execute({
             id,
-            data: {
-                ...data,
-                birth_date: parseISO(data.birth_date),
-            },
+            data,
         });
 
         return response.json(user);
