@@ -1,5 +1,6 @@
 import { parseISO } from 'date-fns';
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
+import { isUuid } from 'uuidv4';
 
 import UserRepository from '../repositories/UsersRepository';
 import CreateUserService from '../services/UserServices/CreateUserService';
@@ -10,13 +11,35 @@ import UpdateUserService from '../services/UserServices/UpdateUserService';
 const usersRouter = Router();
 export const usersRepository = new UserRepository();
 
+const validateData = (request: any, response: any, next: any) => {
+    const { name, birth_date, cpf, phone } = request.body;
+
+    if (!name || !birth_date || !cpf || !phone)
+        return response.status(400).json({ error: 'Parâmetros inválidos.' });
+
+    return next();
+};
+
+const validateId = (
+    request: Request,
+    response: Response,
+    next: NextFunction
+) => {
+    const { id } = request.params;
+
+    if (!isUuid(id))
+        return response.status(400).json({ error: 'ID inválido.' });
+
+    return next();
+};
+
 usersRouter.get('/', (request, response) => {
     const users = usersRepository.all();
 
     return response.json(users);
 });
 
-usersRouter.get('/:id', (request, response) => {
+usersRouter.get('/:id', validateId, (request, response) => {
     try {
         const { id } = request.params;
 
@@ -30,7 +53,7 @@ usersRouter.get('/:id', (request, response) => {
     }
 });
 
-usersRouter.post('/', (request, response) => {
+usersRouter.post('/', validateData, (request, response) => {
     try {
         const data = request.body;
 
@@ -47,7 +70,7 @@ usersRouter.post('/', (request, response) => {
     }
 });
 
-usersRouter.put('/:id', (request, response) => {
+usersRouter.put('/:id', validateId, validateData, (request, response) => {
     try {
         const data = request.body;
         const { id } = request.params;
@@ -68,7 +91,7 @@ usersRouter.put('/:id', (request, response) => {
     }
 });
 
-usersRouter.delete('/:id', (request, response) => {
+usersRouter.delete('/:id', validateId, (request, response) => {
     try {
         const { id } = request.params;
 

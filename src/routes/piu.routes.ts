@@ -1,7 +1,6 @@
-import { parseISO } from 'date-fns';
-import { Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
+import { isUuid } from 'uuidv4';
 import PiuRepository from '../repositories/PiusRepository';
-import UserRepository from '../repositories/UsersRepository';
 import CreatePiuService from '../services/PiuServices/CreatePiuService';
 import DeletePiuService from '../services/PiuServices/DeletePiuService';
 import GetPiuService from '../services/PiuServices/GetPiuService';
@@ -11,13 +10,35 @@ import { usersRepository } from './user.routes';
 const piusRouter = Router();
 export const piusRepository = new PiuRepository();
 
+const validateData = (request: any, response: any, next: any) => {
+    const { user_id, text } = request.body;
+
+    if (!user_id || !text)
+        return response.status(400).json({ error: 'Parâmetros inválidos.' });
+
+    return next();
+};
+
+const validateId = (
+    request: Request,
+    response: Response,
+    next: NextFunction
+) => {
+    const { id } = request.params;
+
+    if (!isUuid(id))
+        return response.status(400).json({ error: 'ID inválido.' });
+
+    return next();
+};
+
 piusRouter.get('/', (request, response) => {
     const users = piusRepository.all();
 
     return response.json(users);
 });
 
-piusRouter.get('/:id', (request, response) => {
+piusRouter.get('/:id', validateId, (request, response) => {
     try {
         const { id } = request.params;
 
@@ -31,7 +52,7 @@ piusRouter.get('/:id', (request, response) => {
     }
 });
 
-piusRouter.post('/', (request, response) => {
+piusRouter.post('/', validateData, (request, response) => {
     try {
         const data = request.body;
 
@@ -48,7 +69,7 @@ piusRouter.post('/', (request, response) => {
     }
 });
 
-piusRouter.put('/:id', (request, response) => {
+piusRouter.put('/:id', validateId, validateData, (request, response) => {
     try {
         const data = request.body;
         const { id } = request.params;
@@ -66,7 +87,7 @@ piusRouter.put('/:id', (request, response) => {
     }
 });
 
-piusRouter.delete('/:id', (request, response) => {
+piusRouter.delete('/:id', validateId, (request, response) => {
     try {
         const { id } = request.params;
 
