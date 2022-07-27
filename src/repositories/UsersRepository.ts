@@ -1,68 +1,68 @@
 import User from '../models/Users';
-import usersRouter from '../routes/user.routes';
 
-interface GetUserDTO {
-    index: number;
+interface IGetUserDTO {
+  index: number;
 }
 
-interface CreateUserDTO {
-    name: string;
-    birth_date: Date;
-    cpf: string;
-    phone: string;
+interface ICreateUserDTO {
+  name: string;
+  birth_date: Date;
+  cpf: string;
+  phone: string;
 }
 
-interface UpdateUserDTO {
-    index: number;
-    data: CreateUserDTO;
+interface IUpdateUserDTO {
+  index: number;
+  data: ICreateUserDTO;
 }
 
-interface DeleteUserDTO {
-    index: number;
+interface IDeleteUserDTO {
+  index: number;
 }
 
 class UserRepository {
-    private users: User[];
+  private users: User[];
 
-    constructor() {
-        this.users = [];
-    }
+  constructor() {
+    this.users = [];
+  }
 
-    public all(): User[] {
-        return this.users;
-    }
+  public all(): User[] {
+    return this.users;
+  }
 
-    public get({ index }: GetUserDTO): User {
-        return this.users[index];
-    }
+  public get({ index }: IGetUserDTO): User {
+    return this.users[index];
+  }
 
-    public create(data: CreateUserDTO): User {
-        const user = new User(data);
+  public create(data: ICreateUserDTO): User {
+    const user = new User(data);
 
-        this.users.push(user);
+    this.users.push(user);
 
-        return user;
-    }
+    return user;
+  }
 
-    public update({ index, data }: UpdateUserDTO): User {
-        return (this.users[index] = {
-            ...this.users[index],
-            ...data,
-            updated_at: new Date(),
-        });
-    }
+  public update({ index, data }: IUpdateUserDTO): User {
+    // eslint-disable-next-line no-return-assign
+    return (this.users[index] = {
+      ...this.users[index],
+      ...data,
+      updated_at: new Date(),
+    });
+  }
 
-    public delete({ index }: DeleteUserDTO) {
-        this.users.splice(index, 1);
-    }
+  public delete({ index }: IDeleteUserDTO) {
+    this.users.splice(index, 1);
+  }
 
-    public findIndexById(id: String): number {
-        return this.users.findIndex((user: User) => user.id === id);
-    }
+  public findIndexById(id: string): number {
+    return this.users.findIndex((user: User) => user.id === id);
+  }
 
-    public findIndexByCpf(cpf: String): number {
-        return this.users.findIndex((user: User) => user.cpf === cpf);
-    }
+  public findIndexByCpf(cpf: string): number {
+    return this.users.findIndex((user: User) => user.cpf === cpf);
+  }
 }
 
 export default UserRepository;
