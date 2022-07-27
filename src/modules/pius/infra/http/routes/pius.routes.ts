@@ -8,5 +8,6 @@ const piusController = new PiusController();
 piusRouter.use(ensureAuthenticated);
 
 piusRouter.post('/', piusController.create);
+piusRouter.get('/', piusController.show);
 
 export default piusRouter;

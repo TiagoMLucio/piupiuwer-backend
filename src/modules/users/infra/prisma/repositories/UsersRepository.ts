@@ -10,28 +10,28 @@ export default class UsersRepository implements IUsersRepository {
     this.prismaClient = client.user;
   }
 
-  create(data: ICreateUserDTO): Promise<User> {
-    const user = this.prismaClient.create({
+  public async create(data: ICreateUserDTO): Promise<User> {
+    const user = await this.prismaClient.create({
       data,
     });
 
     return user;
   }
 
-  findById(id: string): Promise<User | null> {
-    const user = this.prismaClient.findUnique({ where: { id } });
+  public async findById(id: string): Promise<User | null> {
+    const user = await this.prismaClient.findUnique({ where: { id } });
 
     return user;
   }
 
-  findByEmail(email: string): Promise<User | null> {
-    const user = this.prismaClient.findUnique({ where: { email } });
+  public async findByEmail(email: string): Promise<User | null> {
+    const user = await this.prismaClient.findUnique({ where: { email } });
 
     return user;
   }
 
-  findByCpf(cpf: string): Promise<User | null> {
-    const user = this.prismaClient.findUnique({ where: { cpf } });
+  public async findByCpf(cpf: string): Promise<User | null> {
+    const user = await this.prismaClient.findUnique({ where: { cpf } });
 
     return user;
   }
