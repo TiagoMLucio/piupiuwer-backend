@@ -37,7 +37,7 @@ export default class CreatePiuService {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('Nenhum usuário com esse id foi encontrado');
+      throw new AppError('User not found', 404);
     }
 
     if (user.id !== loggedId)

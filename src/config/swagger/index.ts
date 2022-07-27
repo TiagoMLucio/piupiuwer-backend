@@ -21,6 +21,13 @@ const swagger: OpenAPIV3.Document = {
   paths,
   components: {
     schemas,
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
   },
 };
 
