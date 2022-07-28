@@ -1,6 +1,7 @@
 model User {
   id         String   @id @default(uuid())
   name       String
+  username   String   @unique
   email      String   @unique
   password   String
   cpf        String   @unique

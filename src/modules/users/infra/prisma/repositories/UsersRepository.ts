@@ -30,6 +30,12 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  public async findByUsername(username: string): Promise<User | null> {
+    const user = await this.prismaClient.findUnique({ where: { username } });
+
+    return user;
+  }
+
   public async findByEmail(email: string): Promise<User | null> {
     const user = await this.prismaClient.findUnique({ where: { email } });
 

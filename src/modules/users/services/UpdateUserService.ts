@@ -5,6 +5,7 @@ import UsersRepository from '../infra/prisma/repositories/UsersRepository';
 
 interface IRequest {
   id: string;
+  username: string;
   name: string;
   email: string;
   cpf: string;
@@ -21,7 +22,7 @@ export default class UpdateUserService {
   ) {}
 
   public async execute({
-    id, cpf, email, ...rest
+    id, cpf, email, birth_date, phone, about, name, username,
   }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(id);
 
@@ -41,7 +42,7 @@ export default class UpdateUserService {
     if (userWithSameCpf && userWithSameCpf.id !== user.id) throw new AppError('Cpf already exits');
 
     const updatedUser = await this.usersRepository.update({
-      ...user, cpf, email, ...rest,
+      ...user, cpf, email, birth_date, phone, about: about ?? user.about, name, username,
     });
 
     return updatedUser;

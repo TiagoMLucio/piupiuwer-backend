@@ -16,9 +16,9 @@ usersRouter.post('/', validateData(true), usersController.create);
 
 usersRouter.use(ensureAuthenticated);
 
-usersRouter.get('/:id', validateId, usersController.showOne);
-
 usersRouter.get('/', usersController.show);
+
+usersRouter.get('/:id', validateId, usersController.showById);
 
 usersRouter.put('/', validateData(), usersController.update);
 

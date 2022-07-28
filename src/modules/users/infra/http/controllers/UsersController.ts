@@ -1,9 +1,9 @@
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
-import ShowOneUserService from '@modules/users/services/ShowOneUserService';
+import ShowByIdUserService from '@modules/users/services/ShowByIdUserService';
+import ShowByUsernameUserService from '@modules/users/services/ShowByUsernameService';
 import ShowUsersService from '@modules/users/services/ShowUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
-import AppError from '@shared/errors/AppError';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -20,7 +20,17 @@ export default class UsersController {
     return res.json(userWithoutPassword);
   }
 
-  public async show(req: Request, res: Response): Promise<Response> {
+  public async show(req: Request, res: Response) {
+    const { username } = req.query;
+
+    if (username) {
+      const showByUsernameUserService = container.resolve(ShowByUsernameUserService);
+
+      const userWithoutPassword = await showByUsernameUserService.execute({ username: username as string });
+
+      return res.json(userWithoutPassword);
+    }
+
     const showUsersService = container.resolve(ShowUsersService);
 
     const users = await showUsersService.execute();
@@ -33,16 +43,12 @@ export default class UsersController {
     return res.json(usersWithoutPassword);
   }
 
-  public async showOne(req: Request, res: Response): Promise<Response> {
+  public async showById(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    const showOneUsersService = container.resolve(ShowOneUserService);
+    const showByIdUsersService = container.resolve(ShowByIdUserService);
 
-    const user = await showOneUsersService.execute({ id });
-
-    if (!user) throw new AppError('User not found', 404);
-
-    const { password: _, ...userWithoutPassword } = user;
+    const userWithoutPassword = await showByIdUsersService.execute({ id });
 
     return res.json(userWithoutPassword);
   }

@@ -5,6 +5,7 @@ import IUsersRepository from '../repositores/IUsersRepository';
 
 interface IRequest {
   name: string;
+  username: string;
   email: string;
   password: string;
   cpf: string;
