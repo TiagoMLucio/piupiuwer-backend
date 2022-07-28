@@ -7,6 +7,7 @@ model User {
   birth_date String
   phone      String
   about      String?
+  avatar     String?
   pius       Piu[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

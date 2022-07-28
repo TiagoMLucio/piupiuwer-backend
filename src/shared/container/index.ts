@@ -6,7 +6,7 @@ import { container } from 'tsyringe';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
-  UsersRepository
+  UsersRepository,
 );
 
 container.registerSingleton<IPiusRepository>('PiusRepository', PiusRepository);

@@ -18,6 +18,12 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  public async find(): Promise<User[]> {
+    const pius = await this.prismaClient.findMany();
+
+    return pius;
+  }
+
   public async findById(id: string): Promise<User | null> {
     const user = await this.prismaClient.findUnique({ where: { id } });
 
@@ -34,5 +40,18 @@ export default class UsersRepository implements IUsersRepository {
     const user = await this.prismaClient.findUnique({ where: { cpf } });
 
     return user;
+  }
+
+  public async update(user: User): Promise<User> {
+    const updatedUser = await this.prismaClient.update({
+      data: user,
+      where: { id: user.id },
+    });
+
+    return updatedUser;
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.prismaClient.delete({ where: { id } });
   }
 }

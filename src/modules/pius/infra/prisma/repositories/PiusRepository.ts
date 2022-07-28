@@ -1,6 +1,7 @@
+import ICreatePiuDTO from '@modules/pius/dtos/ICreatePiuDTO';
 import IPiusRepository from '@modules/pius/repositories/IPiusRepository';
+import { Piu } from '@prisma/client';
 import client from '@shared/infra/prisma/client';
-import Piu from 'models/Pius';
 
 export default class PiusRepository implements IPiusRepository {
   private ormRepository;

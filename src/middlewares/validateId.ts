@@ -9,7 +9,7 @@ export default function validateId(
 ) {
   const { id } = request.params;
 
-  if (!isUuid(id)) throw new AppError('ID inválido');
+  if (!isUuid(id)) throw new AppError('Invalid ID');
 
   return next();
 }

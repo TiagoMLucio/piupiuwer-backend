@@ -5,7 +5,7 @@ import IPiusRepository from '../repositories/IPiusRepository';
 export default class ShowPiusService {
   constructor(
     @inject('PiusRepository')
-    private piusRepository: IPiusRepository
+    private piusRepository: IPiusRepository,
   ) {}
 
   public async execute() {

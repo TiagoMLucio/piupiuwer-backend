@@ -17,7 +17,7 @@ export default class CreatePiuService {
     private piusRepository: IPiusRepository,
 
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
   ) {}
 
   public async execute({
@@ -30,7 +30,7 @@ export default class CreatePiuService {
     if (piuChars === 0) throw new AppError('Não é possível enviar pius vazios');
     if (piuChars > 140) {
       throw new AppError(
-        'Não é possível enviar pius com mais de 140 caracteres'
+        'Não é possível enviar pius com mais de 140 caracteres',
       );
     }
 
@@ -40,10 +40,11 @@ export default class CreatePiuService {
       throw new AppError('User not found', 404);
     }
 
-    if (user.id !== loggedId)
+    if (user.id !== loggedId) {
       throw new AppError(
-        'Não é possível postar pius com ids de outros usuários'
+        'Não é possível postar pius com ids de outros usuários',
       );
+    }
 
     const piu = await this.piusRepository.create({
       user_id,

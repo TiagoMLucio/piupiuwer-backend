@@ -24,7 +24,7 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 const logRequests = (
   request: Request,
   _response: Response,
-  next: () => void
+  next: () => void,
 ) => {
   const { method, url } = request;
 
@@ -56,7 +56,7 @@ app.use(
       status: 'error',
       message: 'Internal server error',
     });
-  }
+  },
 );
 
 app.listen(process.env.PORT || 3333, () => {
