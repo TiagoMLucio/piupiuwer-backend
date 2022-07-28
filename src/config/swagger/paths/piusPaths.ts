@@ -5,7 +5,7 @@ const piusPaths: OpenAPIV3.PathsObject = {
   '/pius': {
     post: {
       summary: 'Criar pius',
-      description: 'Documentação de como criar um novo piu',
+      description: 'Documentação de como criar um novo piu do usuário logado',
       tags: ['Pius'],
       security: [
         {
@@ -17,7 +17,6 @@ const piusPaths: OpenAPIV3.PathsObject = {
           'application/json': {
             schema: {
               properties: {
-                user_id: { type: 'string' },
                 text: { type: 'string' },
               },
             },
@@ -39,7 +38,7 @@ const piusPaths: OpenAPIV3.PathsObject = {
     },
     get: {
       summary: 'Listar pius',
-      description: 'Documentação de como listar um novo piu',
+      description: 'Documentação de como listar todos os pius',
       tags: ['Pius'],
       security: [
         {

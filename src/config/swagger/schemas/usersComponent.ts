@@ -11,6 +11,7 @@ const usersComponent: OpenAPIV3.ComponentsObject['schemas'] = {
       birth_date: { type: 'string' },
       phone: { type: 'string' },
       about: { type: 'string' },
+      avatar: { type: 'string' },
       created_at: { type: 'string' },
       updated_at: { type: 'string' },
     },

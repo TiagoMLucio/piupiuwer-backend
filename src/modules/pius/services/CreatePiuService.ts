@@ -7,7 +7,6 @@ import IPiusRepository from '../repositories/IPiusRepository';
 interface IRequest {
   user_id: string;
   text: string;
-  loggedUser: { id: string };
 }
 
 @injectable()
@@ -23,7 +22,6 @@ export default class CreatePiuService {
   public async execute({
     user_id,
     text,
-    loggedUser: { id: loggedId },
   }: IRequest): Promise<Piu> {
     const piuChars = text.length;
 
@@ -38,12 +36,6 @@ export default class CreatePiuService {
 
     if (!user) {
       throw new AppError('User not found', 404);
-    }
-
-    if (user.id !== loggedId) {
-      throw new AppError(
-        'Não é possível postar pius com ids de outros usuários',
-      );
     }
 
     const piu = await this.piusRepository.create({

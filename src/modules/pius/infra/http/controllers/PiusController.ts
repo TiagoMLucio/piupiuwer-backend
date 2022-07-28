@@ -5,12 +5,11 @@ import { container } from 'tsyringe';
 
 export default class PiusController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { user_id, text } = req.body;
-    const loggedUser = req.user;
+    const { text } = req.body;
 
     const createPiusService = container.resolve(CreatePiuService);
 
-    const piu = await createPiusService.execute({ user_id, text, loggedUser });
+    const piu = await createPiusService.execute({ user_id: req.user.id, text });
 
     return res.json(piu);
   }

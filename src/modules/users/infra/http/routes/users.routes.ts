@@ -22,7 +22,7 @@ usersRouter.get('/', usersController.show);
 
 usersRouter.put('/', validateData(), usersController.update);
 
-usersRouter.patch('/', upload.single('avatar'), userUpdateAvatarController.update);
+usersRouter.patch('/avatar', upload.single('avatar'), userUpdateAvatarController.update);
 
 usersRouter.delete('/:id', validateId, usersController.delete);
 
