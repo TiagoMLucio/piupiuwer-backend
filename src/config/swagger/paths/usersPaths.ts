@@ -13,6 +13,7 @@ const usersPaths: OpenAPIV3.PathsObject = {
             schema: {
               properties: {
                 name: { type: 'string' },
+                username: { type: 'string' },
                 email: { type: 'string' },
                 password: { type: 'string' },
                 cpf: { type: 'string' },
@@ -83,6 +84,12 @@ const usersPaths: OpenAPIV3.PathsObject = {
       security: [
         {
           bearerAuth: [],
+        },
+      ],
+      parameters: [
+        {
+          name: 'username',
+          in: 'query',
         },
       ],
       responses: {

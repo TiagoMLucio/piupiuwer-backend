@@ -23,7 +23,7 @@ export default class UpdateUserService {
 
   public async execute({
     id, cpf, email, birth_date, phone, about, name, username,
-  }: IRequest): Promise<User> {
+  }: IRequest): Promise<Omit<User, 'password'>> {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
@@ -45,6 +45,8 @@ export default class UpdateUserService {
       ...user, cpf, email, birth_date, phone, about: about ?? user.about, name, username,
     });
 
-    return updatedUser;
+    const { password: _, ...updatedUserWithoutPassword } = updatedUser;
+
+    return updatedUserWithoutPassword;
   }
 }

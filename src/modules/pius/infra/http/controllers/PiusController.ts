@@ -15,10 +15,12 @@ export default class PiusController {
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
+    const { page, take } = req.query;
+
     const showPiusService = container.resolve(ShowPiusService);
 
-    const pius = await showPiusService.execute();
+    const pius = await showPiusService.execute({ page: Number(page), take: Number(take) });
 
-    return res.json(pius);
+    return res.json({ pius, page, total: pius.length });
   }
 }

@@ -1,4 +1,5 @@
 import ICreatePiuDTO from '@modules/pius/dtos/ICreatePiuDTO';
+import IShowPaginationDTO from '@modules/pius/dtos/IShowPaginationDTO';
 import IPiusRepository from '@modules/pius/repositories/IPiusRepository';
 import { Piu } from '@prisma/client';
 import client from '@shared/infra/prisma/client';
@@ -18,6 +19,12 @@ export default class PiusRepository implements IPiusRepository {
 
   public async find(): Promise<Piu[]> {
     const pius = await this.ormRepository.findMany();
+
+    return pius;
+  }
+
+  public async findWithPagination({ skip, take }: IShowPaginationDTO): Promise<Piu[]> {
+    const pius = await this.ormRepository.findMany({ skip, take });
 
     return pius;
   }

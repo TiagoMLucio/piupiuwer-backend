@@ -13,9 +13,7 @@ export default class UsersController {
 
     const createUserService = container.resolve(CreateUserService);
 
-    const user = await createUserService.execute(data);
-
-    const { password: _, ...userWithoutPassword } = user;
+    const userWithoutPassword = await createUserService.execute(data);
 
     return res.json(userWithoutPassword);
   }
@@ -33,12 +31,7 @@ export default class UsersController {
 
     const showUsersService = container.resolve(ShowUsersService);
 
-    const users = await showUsersService.execute();
-
-    const usersWithoutPassword = users.map((user) => {
-      const { password: _, ...userWithoutPassword } = user;
-      return userWithoutPassword;
-    });
+    const usersWithoutPassword = await showUsersService.execute();
 
     return res.json(usersWithoutPassword);
   }
@@ -58,9 +51,7 @@ export default class UsersController {
 
     const updateUserService = container.resolve(UpdateUserService);
 
-    const user = await updateUserService.execute({ id: req.user.id, ...data });
-
-    const { password: _, ...userWithoutPassword } = user;
+    const userWithoutPassword = await updateUserService.execute({ id: req.user.id, ...data });
 
     return res.json(userWithoutPassword);
   }

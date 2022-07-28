@@ -6,6 +6,7 @@ const usersComponent: OpenAPIV3.ComponentsObject['schemas'] = {
     properties: {
       id: { type: 'string' },
       name: { type: 'string' },
+      username: { type: 'string' },
       email: { type: 'string' },
       cpf: { type: 'string' },
       birth_date: { type: 'string' },

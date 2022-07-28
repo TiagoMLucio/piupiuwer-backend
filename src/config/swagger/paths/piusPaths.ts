@@ -45,14 +45,32 @@ const piusPaths: OpenAPIV3.PathsObject = {
           bearerAuth: [],
         },
       ],
+      parameters: [
+        {
+          name: 'page',
+          in: 'query',
+        },
+        {
+          name: 'take',
+          in: 'query',
+        },
+      ],
       responses: {
         200: {
           description: 'OK',
           content: {
             'application/json': {
               schema: {
-                type: 'array',
-                items: { ...piusComponent?.Piu },
+                type: 'object',
+                properties: {
+                  pius: {
+                    type: 'array',
+                    items: { ...piusComponent?.Piu },
+                  },
+                  total: {
+                    type: 'integer',
+                  },
+                },
               },
             },
           },

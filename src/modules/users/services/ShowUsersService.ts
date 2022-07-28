@@ -9,9 +9,14 @@ export default class ShowUsersService {
     private usersRepository: UsersRepository,
   ) {}
 
-  public async execute(): Promise<User[]> {
+  public async execute(): Promise<Omit<User, 'password'>[]> {
     const users = await this.usersRepository.find();
 
-    return users;
+    const usersWithoutPassword = users.map((user) => {
+      const { password: _, ...userWithoutPassword } = user;
+      return userWithoutPassword;
+    });
+
+    return usersWithoutPassword;
   }
 }

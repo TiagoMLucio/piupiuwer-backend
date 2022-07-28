@@ -7,10 +7,10 @@ const validateData = (withPassword = false) => (
   next: NextFunction,
 ) => {
   const {
-    name, email, password, birth_date, cpf, phone,
+    name, email, password, birth_date, cpf, phone, username,
   } = request.body;
 
-  if (!name || !email || !cpf || !birth_date || !phone || (withPassword && !password)) {
+  if (!name || !username || !email || !cpf || !birth_date || !phone || (withPassword && !password)) {
     throw new AppError('Parâmetros inválidos');
   }
 

@@ -22,7 +22,7 @@ export default class CreateUserService {
   ) {}
 
   public async execute({
-    email, cpf, password, ...rest
+    email, cpf, password, username, ...rest
   }: IRequest) {
     const checkIfUserWithSameEmailExists = await this.usersRepository.findByEmail(email);
 
@@ -36,17 +36,22 @@ export default class CreateUserService {
 
     if (checkIfUserWithSameCpfExists) throw new AppError('Cpf already used');
 
+    const checkIfUserWithSameUsernameExists = await this.usersRepository.findByUsername(username);
+
+    if (checkIfUserWithSameUsernameExists) throw new AppError('Username already used');
+
     const hashedPassword = await hash(password, 8);
 
     const user = await this.usersRepository.create({
       email,
       password: hashedPassword,
       cpf,
+      username,
       ...rest,
     });
 
-    user.password = '###';
+    const { password: _, ...userWithoutPassword } = user;
 
-    return user;
+    return userWithoutPassword;
   }
 }
