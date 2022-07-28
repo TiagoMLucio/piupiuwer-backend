@@ -70,8 +70,7 @@ const usersPaths: OpenAPIV3.PathsObject = {
           content: {
             'application/json': {
               schema: {
-                type: 'array',
-                items: { ...usersComponent?.User },
+                ...usersComponent?.User,
               },
             },
           },
