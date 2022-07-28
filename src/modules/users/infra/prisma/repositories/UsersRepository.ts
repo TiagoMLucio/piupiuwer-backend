@@ -1,4 +1,5 @@
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IShowUsersPaginationDTO from '@modules/users/dtos/IShowUserPaginationDTO';
 import IUsersRepository from '@modules/users/repositores/IUsersRepository';
 import { User } from '@prisma/client';
 import client from '@shared/infra/prisma/client';
@@ -19,9 +20,15 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async find(): Promise<User[]> {
-    const pius = await this.prismaClient.findMany();
+    const users = await this.prismaClient.findMany();
 
-    return pius;
+    return users;
+  }
+
+  public async findWithPagination({ skip, take }: IShowUsersPaginationDTO): Promise<User[]> {
+    const users = await this.prismaClient.findMany({ skip, take });
+
+    return users;
   }
 
   public async findById(id: string): Promise<User | null> {

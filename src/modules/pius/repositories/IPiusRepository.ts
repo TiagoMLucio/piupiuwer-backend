@@ -1,6 +1,6 @@
 import { Piu } from '@prisma/client';
 import ICreatePiuDTO from '../dtos/ICreatePiuDTO';
-import IShowPaginationDTO from '../dtos/IShowPaginationDTO';
+import IShowPaginationDTO from '../dtos/IShowPiusPaginationDTO';
 
 interface IPiusRepository {
   create(data: ICreatePiuDTO): Promise<Piu>;

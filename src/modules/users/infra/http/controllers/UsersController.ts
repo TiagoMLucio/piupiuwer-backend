@@ -19,7 +19,7 @@ export default class UsersController {
   }
 
   public async show(req: Request, res: Response) {
-    const { username } = req.query;
+    const { page, take, username } = req.query;
 
     if (username) {
       const showByUsernameUserService = container.resolve(ShowByUsernameUserService);
@@ -31,9 +31,9 @@ export default class UsersController {
 
     const showUsersService = container.resolve(ShowUsersService);
 
-    const usersWithoutPassword = await showUsersService.execute();
+    const usersWithoutPassword = await showUsersService.execute({ page: Number(page), take: Number(take) });
 
-    return res.json(usersWithoutPassword);
+    return res.json({ users: usersWithoutPassword, page, total: usersWithoutPassword.length });
   }
 
   public async showById(req: Request, res: Response): Promise<Response> {

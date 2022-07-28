@@ -53,6 +53,7 @@ const usersPaths: OpenAPIV3.PathsObject = {
             schema: {
               properties: {
                 name: { type: 'string' },
+                username: { type: 'string' },
                 email: { type: 'string' },
                 cpf: { type: 'string' },
                 birth_date: { type: 'string' },
@@ -91,6 +92,14 @@ const usersPaths: OpenAPIV3.PathsObject = {
           name: 'username',
           in: 'query',
         },
+        {
+          name: 'page',
+          in: 'query',
+        },
+        {
+          name: 'take',
+          in: 'query',
+        },
       ],
       responses: {
         200: {
@@ -98,8 +107,16 @@ const usersPaths: OpenAPIV3.PathsObject = {
           content: {
             'application/json': {
               schema: {
-                type: 'array',
-                items: { ...usersComponent?.User },
+                type: 'object',
+                properties: {
+                  pius: {
+                    type: 'array',
+                    items: { ...usersComponent?.User },
+                  },
+                  total: {
+                    type: 'integer',
+                  },
+                },
               },
             },
           },

@@ -35,11 +35,19 @@ export default class UpdateUserService {
 
     const userWithSameEmail = await this.usersRepository.findByEmail(email);
 
-    if (userWithSameEmail && userWithSameEmail.id !== user.id) throw new AppError('Email already exits');
+    if (userWithSameEmail && userWithSameEmail.id !== user.id) {
+      throw new AppError('Email already used');
+    }
 
-    const userWithSameCpf = await this.usersRepository.findByCpf(cpf);
+    const userWithSameCpf = await this.usersRepository.findByCpf(
+      cpf,
+    );
 
-    if (userWithSameCpf && userWithSameCpf.id !== user.id) throw new AppError('Cpf already exits');
+    if (userWithSameCpf && userWithSameCpf.id !== user.id) throw new AppError('Cpf already used');
+
+    const userWithSameUsername = await this.usersRepository.findByUsername(username);
+
+    if (userWithSameUsername && userWithSameUsername.id !== user.id) throw new AppError('Username already used');
 
     const updatedUser = await this.usersRepository.update({
       ...user, cpf, email, birth_date, phone, about: about ?? user.about, name, username,
