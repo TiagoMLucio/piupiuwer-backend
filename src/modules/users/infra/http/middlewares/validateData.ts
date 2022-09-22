@@ -11,7 +11,7 @@ const validateData = (withPassword = false) => (
   } = request.body;
 
   if (!name || !username || !email || !cpf || !birth_date || !phone || (withPassword && !password)) {
-    throw new AppError('Parâmetros inválidos');
+    throw new AppError('Invalid Parameters');
   }
 
   return next();

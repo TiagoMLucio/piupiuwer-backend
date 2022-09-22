@@ -24,7 +24,7 @@ const sessionsPaths: OpenAPIV3.PathsObject = {
           description: 'OK',
           content: {
             'application/json': {
-              schema: {
+              schema: {a
                 properties: {
                   user: { ...usersComponent?.User },
                   token: { type: 'string' },

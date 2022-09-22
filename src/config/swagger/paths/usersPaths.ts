@@ -184,6 +184,7 @@ const usersPaths: OpenAPIV3.PathsObject = {
           bearerAuth: [],
         },
       ],
+      operationId: 'upload',
       responses: {
         200: {
           description: 'OK',

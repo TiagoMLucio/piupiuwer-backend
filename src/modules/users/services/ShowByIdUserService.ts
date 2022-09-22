@@ -12,7 +12,7 @@ export default class ShowByIdUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: UsersRepository,
-  ) {}
+  ) { }
 
   public async execute({ id }: IRequest): Promise<Omit<User, 'password'> | null> {
     const user = await this.usersRepository.findById(id);

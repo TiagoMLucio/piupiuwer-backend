@@ -25,10 +25,10 @@ export default class CreatePiuService {
   }: IRequest): Promise<Piu> {
     const piuChars = text.length;
 
-    if (piuChars === 0) throw new AppError('Não é possível enviar pius vazios');
+    if (piuChars === 0) throw new AppError('Pius must have more at least one character');
     if (piuChars > 140) {
       throw new AppError(
-        'Não é possível enviar pius com mais de 140 caracteres',
+        "Pius can't have more than 140 characters",
       );
     }
 
